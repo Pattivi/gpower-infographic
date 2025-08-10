@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia G*Power Interativo</title>
-    <!-- Bibliotecas essenciais para o React, Babel e Tailwind -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <title>Bioestatística</title>
+    <!-- Alterei os links para versões mais estáveis do React e ReactDOM para evitar erros de carregamento -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -20,250 +20,44 @@
 
     <script type="text/babel">
         const { useState } = React;
-
-        // Ícones agora são SVG embutidos para evitar dependências externas
-        const icons = {
-            't tests': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="18" x2="16" y2="18"></line><line x1="8" y1="15" x2="16" y2="15"></line>
-                </svg>
-            ),
-            'F tests': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
-                    <path d="M12 21a9 9 0 0 0 9-9c0-1.2-.3-2.4-.9-3.4s-1.5-1.9-2.7-2.5-2.5-1-3.8-1-2.5.3-3.8 1-2.4 1.5-3.3 2.5a9 9 0 0 0-3 6.4 9 9 0 0 0 9 9z"></path><path d="M12 3a9 9 0 0 0-9 9c0 1.2.3 2.4.9 3.4s1.5 1.9 2.7 2.5 2.5 1 3.8 1 2.5-.3 3.8-1 2.4-1.5 3.3-2.5a9 9 0 0 0 3-6.4 9 9 0 0 0-9-9z"></path>
-                </svg>
-            ),
-            'χ² tests': null,
-            'z tests': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
-                    <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"></path><path d="M12 11V8"></path><path d="M12 16h.01"></path>
-                </svg>
-            ),
-            'PlaySquare': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 mr-1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-            ),
-            'ChevronRight': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 ml-auto text-indigo-500"><path d="M9 18l6-6-6-6"></path></svg>
-            )
-        };
-
-        const translations = {
-            'pt': {
-                title: 'Guia G*Power Interativo',
-                restart: 'Reiniciar',
-                step1Title: '1. Escolha a Família de Testes',
-                step1Description: 'Comece selecionando o tipo geral de teste estatístico que você vai usar. Clique em uma das opções abaixo para continuar.',
-                step2Title: (family) => `2. Escolha o Teste Estatístico Específico`,
-                step2Description: (family) => `Agora, selecione o teste que melhor se encaixa no seu tipo de análise dentro da família de testes **${family}**.`,
-                step3Title: '3. Escolha o Tipo de Análise de Poder',
-                step3Description: 'Finalmente, defina o objetivo da sua análise de poder. O G*Power permite que você calcule um dos quatro elementos principais, fornecendo os outros três.',
-                families: {
-                    't tests': {
-                        name: 't tests',
-                        description: 'Para comparar a média de um ou dois grupos. Ideal para análises simples.',
-                        tests: [
-                            { name: 'Médias: Diferença entre duas médias independentes', description: 'Compara as médias de dois grupos que não têm relação entre si (ex: grupo de tratamento vs. grupo de controle).' },
-                            { name: 'Médias: Diferença entre duas médias pareadas', description: 'Compara as médias do mesmo grupo em dois momentos diferentes (ex: antes e depois de uma intervenção).' },
-                        ]
-                    },
-                    'F tests': {
-                        name: 'F tests',
-                        description: 'Para comparar as médias de três ou mais grupos ou para análise de regressão. Utilizado em estudos mais complexos.',
-                        tests: [
-                            { name: 'ANOVA: Análise de variância', description: 'Testa se há diferenças significativas nas médias entre três ou mais grupos independentes.' },
-                            { name: 'Regressão Linear Múltipla', description: 'Avalia a influência de múltiplas variáveis independentes sobre uma variável dependente.' },
-                        ]
-                    },
-                    'χ² tests': {
-                        name: 'χ² tests',
-                        description: 'Para analisar dados categóricos (frequências ou proporções). Testa a associação entre variáveis.',
-                        tests: [
-                            { name: 'Teste de independência', description: 'Verifica se a distribuição de uma variável categórica é independente de outra (ex: gênero e preferência de produto).' },
-                            { name: 'Teste de bondade de ajuste', description: 'Compara a frequência observada de categorias com a frequência esperada.' },
-                        ]
-                    },
-                    'z tests': {
-                        name: 'z tests',
-                        description: 'Para comparar proporções entre dois grupos. Similar ao teste t, mas para variáveis binárias/dicotômicas.',
-                        tests: [
-                            { name: 'Proporções: Diferença entre duas proporções independentes', description: 'Compara a proporção de um evento em dois grupos distintos (ex: taxa de sucesso de dois medicamentos).' },
-                        ]
-                    },
-                },
-                powerAnalyses: [
-                    { name: 'Análise A Priori', description: 'Calcula o **tamanho da amostra** necessário para um estudo. É o tipo mais comum e usado no planejamento da pesquisa. Você insere o poder, o nível de significância e o tamanho do efeito desejado, e o G*Power te diz quantos participantes precisa.' },
-                    { name: 'Análise Post Hoc', description: 'Calcula o **poder estatístico alcançado** por um estudo já concluído. Você insere o tamanho da amostra que usou, o nível de significância e o tamanho do efeito encontrado, e o G*Power te dá a probabilidade de ter detectado esse efeito.' },
-                    { name: 'Análise de Sensibilidade', description: 'Calcula o **tamanho do efeito mínimo** que seu estudo pode detectar. Útil para determinar a sensibilidade de um estudo com um tamanho amostral e poder fixos.' },
-                ],
+        const infographics = [
+            {
+                id: 'gpower-infographic',
+                title: 'Guia para o G*Power',
+                description: 'Um guia interativo sobre a análise de poder estatístico usando o software G*Power.',
+                // Link atualizado para o infográfico do G*Power, assumindo a nova estrutura de pastas
+                link: '/infographics/gpower/index.html',
             },
-            'en': {
-                title: 'G*Power Interactive Guide',
-                restart: 'Restart',
-                step1Title: '1. Choose the Test Family',
-                step1Description: 'Start by selecting the general category of the statistical test you will use. Click on an option below to continue.',
-                step2Title: (family) => `2. Choose the Specific Statistical Test`,
-                step2Description: (family) => `Now, select the test that best fits your analysis within the **${family}** test family.`,
-                step3Title: '3. Choose the Type of Power Analysis',
-                step3Description: 'Finally, define the objective of your power analysis. G*Power allows you to calculate one of the four main elements by providing the other three.',
-                families: {
-                    't tests': {
-                        name: 't tests',
-                        description: 'For comparing the mean of one or two groups. Ideal for simple analyses.',
-                        tests: [
-                            { name: 'Means: Difference between two independent means', description: 'Compares the means of two groups that are unrelated to each other (e.g., treatment group vs. control group).' },
-                            { name: 'Means: Difference between two paired means', description: 'Compares the means of the same group at two different times (e.g., before and after an intervention).' },
-                        ]
-                    },
-                    'F tests': {
-                        name: 'F tests',
-                        description: 'For comparing the means of three or more groups or for regression analysis. Used in more complex studies.',
-                        tests: [
-                            { name: 'ANOVA: Analysis of variance', description: 'Tests if there are significant differences in means among three or more independent groups.' },
-                            { name: 'Multiple Linear Regression', description: 'Evaluates the influence of multiple independent variables on a dependent variable.' },
-                        ]
-                    },
-                    'χ² tests': {
-                        name: 'χ² tests',
-                        description: 'For analyzing categorical data (frequencies or proportions). Tests the association between variables.',
-                        tests: [
-                            { name: 'Test of independence', description: 'Checks if the distribution of one categorical variable is independent of another (e.g., gender and product preference).' },
-                            { name: 'Goodness-of-fit test', description: 'Compares the observed frequency of categories with the expected frequency.' },
-                        ]
-                    },
-                    'z tests': {
-                        name: 'z tests',
-                        description: 'For comparing proportions between two groups. Similar to the t-test, but for binary/dichotomous variables.',
-                        tests: [
-                            { name: 'Proportions: Difference between two independent proportions', description: 'Compares the proportion of an event in two distinct groups (e.g., success rate of two medications).' },
-                        ]
-                    },
-                },
-                powerAnalyses: [
-                    { name: 'A Priori Analysis', description: 'Calculates the required **sample size** for a study. This is the most common type, used in research planning. You enter the desired power, significance level, and effect size, and G*Power tells you how many participants you need.' },
-                    { name: 'Post Hoc Analysis', description: 'Calculates the **statistical power achieved** by a completed study. You enter the sample size you used, the significance level, and the effect size found, and G*Power gives you the probability of having detected that effect.' },
-                    { name: 'Sensitivity Analysis', description: 'Calculates the **minimum effect size** your study can detect. Useful for determining the sensitivity of a study with a fixed sample size and power.' },
-                ],
+            {
+                id: 'r-power-infographic',
+                title: 'Como analisar poder estatístico no R',
+                description: 'Um guia interativo para a análise de poder estatístico usando o pacote `pwr` no R.',
+                // Link atualizado para o infográfico do R, assumindo a nova estrutura de pastas
+                link: '/infographics/r-power/index.html',
             }
-        };
+        ];
 
         function App() {
-            const [activeFamily, setActiveFamily] = useState(null);
-            const [activeTest, setActiveTest] = useState(null);
-            const [activeAnalysis, setActiveAnalysis] = useState(null);
-            const [language, setLanguage] = useState('pt');
-
-            const text = translations[language];
-
-            const resetAll = () => {
-                setActiveFamily(null);
-                setActiveTest(null);
-                setActiveAnalysis(null);
-            };
-
-            const handleLanguageChange = (e) => {
-                setLanguage(e.target.value);
-            };
-
             return (
                 <div className="bg-gray-50 min-h-screen p-8 font-sans antialiased text-gray-800">
                     <div className="container mx-auto max-w-4xl bg-white rounded-3xl shadow-xl p-8 md:p-12">
-                        
-                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
-                            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{text.title}</h1>
-                            <div className="flex items-center space-x-4">
-                                <select onChange={handleLanguageChange} value={language} className="bg-white border border-gray-300 rounded-lg p-2 text-sm font-semibold text-gray-700">
-                                    <option value="pt">Português</option>
-                                    <option value="en">English</option>
-                                </select>
-                                <button
-                                    onClick={resetAll}
-                                    className="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
-                                >
-                                    {icons['PlaySquare']}
-                                    {text.restart}
-                                </button>
-                            </div>
-                        </div>
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Bioestatística</h1>
+                        <p className="text-gray-600 mb-8">
+                            Uma coleção de guias interativos sobre bioestatística para ajudar a planejar e entender sua pesquisa.
+                        </p>
 
-                        {/* Família de Testes */}
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step1Title}</h2>
-                        <p className="text-gray-600 mb-6">{text.step1Description}</p>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                            {Object.keys(text.families).map(family => (
-                                <button
-                                    key={family}
-                                    onClick={() => {
-                                        setActiveFamily(family);
-                                        setActiveTest(null);
-                                        setActiveAnalysis(null);
-                                    }}
-                                    className={`p-6 rounded-2xl transition-all duration-300 transform ${
-                                        activeFamily === family ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
-                                    }`}
+                        <div className="space-y-6">
+                            {infographics.map(info => (
+                                <a
+                                    key={info.id}
+                                    href={info.link}
+                                    className="block p-6 rounded-2xl bg-gray-100 hover:bg-indigo-100 transition-colors duration-300 transform hover:scale-105 shadow-md"
                                 >
-                                    <div className="flex items-center">
-                                        {family === 'χ² tests' ? (
-                                            <span className="text-2xl text-indigo-500 font-serif mr-3">χ²</span>
-                                        ) : (
-                                            icons[family]
-                                        )}
-                                        <span className="ml-3 text-lg font-semibold text-gray-900">{text.families[family].name}</span>
-                                        {activeFamily === family && icons['ChevronRight']}
-                                    </div>
-                                    <p className="mt-2 text-sm text-left text-gray-600">{text.families[family].description}</p>
-                                </button>
+                                    <h2 className="text-xl font-bold text-indigo-700">{info.title}</h2>
+                                    <p className="mt-2 text-gray-600">{info.description}</p>
+                                </a>
                             ))}
                         </div>
-
-                        {/* Testes Estatísticos Específicos */}
-                        {activeFamily && (
-                            <>
-                                <div className="h-px bg-gray-200 my-8"></div>
-                                <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step2Title(text.families[activeFamily].name)}</h2>
-                                <p className="text-gray-600 mb-6">{text.step2Description(text.families[activeFamily].name)}</p>
-                                
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                    {text.families[activeFamily].tests.map(test => (
-                                        <button
-                                            key={test.name}
-                                            onClick={() => {
-                                                setActiveTest(test.name);
-                                                setActiveAnalysis(null);
-                                            }}
-                                            className={`p-6 rounded-2xl transition-all duration-300 transform ${
-                                                activeTest === test.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
-                                            }`}
-                                        >
-                                            <div className="flex items-center">
-                                                <span className="text-lg font-semibold text-gray-900">{test.name}</span>
-                                                {activeTest === test.name && icons['ChevronRight']}
-                                            </div>
-                                            <p className="mt-2 text-sm text-left text-gray-600">{test.description}</p>
-                                        </button>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-
-                        {/* Tipos de Análise de Poder */}
-                        {activeTest && (
-                            <>
-                                <div className="h-px bg-gray-200 my-8"></div>
-                                <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step3Title}</h2>
-                                <p className="text-gray-600 mb-6">{text.step3Description}</p>
-
-                                <div className="space-y-6">
-                                    {text.powerAnalyses.map(analysis => (
-                                        <div key={analysis.name} className="bg-indigo-50 p-6 rounded-2xl border border-indigo-200">
-                                            <h3 className="text-xl font-bold text-indigo-700 mb-2">{analysis.name}</h3>
-                                            <p className="text-gray-700">{analysis.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-
                     </div>
                 </div>
             );
