@@ -101,8 +101,8 @@
                         icon: icons.xCircle,
                     },
                 ],
-                step4Title: '4. Escolha do Teste Estatístico',
-                step4Description: 'Com base na sua análise de normalidade, escolha o teste mais adequado para os seus dados. Clique abaixo para ver detalhes sobre os tipos de testes.',
+                step4Title: '4. Escolha do Tipo de Teste Estatístico',
+                step4Description: 'Com base na sua análise de normalidade, escolha a categoria de teste mais adequada para os seus dados.',
                 finalChoice: [
                     {
                         type: 'Testes Paramétricos',
@@ -113,25 +113,43 @@
                         condition: 'Dados Não Normais',
                     },
                 ],
+                step5Title: '5. Escolha do Teste Específico',
+                step5Description: 'Agora, selecione o teste que melhor se aplica à sua pesquisa para ver detalhes e exemplos.',
                 detailedTests: {
                     'Testes Paramétricos': {
                         intro: 'Use quando seus dados <strong>seguem uma distribuição normal</strong> e a variância dos grupos é homogênea. São testes mais robustos e poderosos.',
                         list: [
-                            { name: 'Teste t', description: 'Compara as médias de dois grupos (amostras independentes, pareadas ou uma única amostra).' },
-                            { name: 'ANOVA (Análise de Variância)', description: 'Compara as médias de três ou mais grupos. Pode ser de uma via, duas vias, ou de medidas repetidas.' },
+                            { 
+                                name: 'Teste t', 
+                                description: 'Compara as médias de dois grupos (amostras independentes, pareadas ou uma única amostra).',
+                                example: '<strong>Exemplo:</strong> Você quer comparar o peso médio de dois grupos de ratos. Use o Teste t para amostras independentes se os grupos não tiverem relação entre si.'
+                            },
+                            { 
+                                name: 'ANOVA (Análise de Variância)', 
+                                description: 'Compara as médias de três ou mais grupos. Pode ser de uma via, duas vias, ou de medidas repetidas.',
+                                example: '<strong>Exemplo:</strong> Você quer comparar o nível de glicose entre três grupos: um de controle, um com dieta rica em gordura e outro com dieta balanceada.'
+                            },
                         ],
                     },
                     'Testes Não Paramétricos': {
                         intro: 'Use quando seus dados <strong>não seguem uma distribuição normal</strong>. São menos sensíveis, mas mais flexíveis, pois não fazem suposições sobre a distribuição.',
                         list: [
-                            { name: 'Teste de Mann-Whitney', description: 'Equivalente não paramétrico do Teste t independente. Compara as distribuições de dois grupos.' },
-                            { name: 'Teste de Kruskal-Wallis', description: 'Equivalente não paramétrico da ANOVA de uma via. Compara as distribuições de três ou mais grupos.' },
+                            { 
+                                name: 'Teste de Mann-Whitney', 
+                                description: 'Equivalente não paramétrico do Teste t independente. Compara as distribuições de dois grupos.',
+                                example: '<strong>Exemplo:</strong> Você quer comparar os escores de uma escala de satisfação entre homens e mulheres, mas a distribuição dos escores não é normal.'
+                            },
+                            { 
+                                name: 'Teste de Kruskal-Wallis', 
+                                description: 'Equivalente não paramétrico da ANOVA de uma via. Compara as distribuições de três ou mais grupos.',
+                                example: '<strong>Exemplo:</strong> Você quer comparar os rankings de desempenho de atletas de três países diferentes, onde a distribuição dos dados não é normal.'
+                            },
                         ],
                     },
                 },
             },
             'en': {
-                title: 'Interactive Statistical Analysis Guide',
+                title: 'How to choose the type of statistical analysis',
                 restart: 'Restart',
                 intro: 'Understand how to check the normality of your data and choose the most appropriate statistical test (parametric or non-parametric).',
                 step1Title: '1. Visual and Graphical Verification',
@@ -174,8 +192,8 @@
                         icon: icons.xCircle,
                     },
                 ],
-                step4Title: '4. Choosing the Statistical Test',
-                step4Description: 'Based on your normality analysis, choose the most appropriate test for your data. Click below for details on test types.',
+                step4Title: '4. Choosing the Statistical Test Type',
+                step4Description: 'Based on your normality analysis, choose the most appropriate test type for your data.',
                 finalChoice: [
                     {
                         type: 'Parametric Tests',
@@ -186,19 +204,37 @@
                         condition: 'Non-Normal Data',
                     },
                 ],
+                step5Title: '5. Choosing the Specific Test',
+                step5Description: 'Now, select the test that best fits your research to see details and examples.',
                 detailedTests: {
                     'Parametric Tests': {
                         intro: 'Use when your data <strong>follows a normal distribution</strong> and the variance of the groups is homogeneous. These are more robust and powerful tests.',
                         list: [
-                            { name: 't-Test', description: 'Compares the means of two groups (independent, paired, or a single sample).' },
-                            { name: 'ANOVA (Analysis of Variance)', description: 'Compares the means of three or more groups. Can be one-way, two-way, or repeated measures.' },
+                            { 
+                                name: 't-Test', 
+                                description: 'Compares the means of two groups (independent, paired, or a single sample).',
+                                example: '<strong>Example:</strong> You want to compare the average weight of two groups of mice. Use the independent t-Test if the groups are unrelated.'
+                            },
+                            { 
+                                name: 'ANOVA (Analysis of Variance)', 
+                                description: 'Compares the means of three or more groups. Can be one-way, two-way, or repeated measures.',
+                                example: '<strong>Example:</strong> You want to compare the glucose level among three groups: a control group, a high-fat diet group, and a balanced diet group.'
+                            },
                         ],
                     },
                     'Non-Parametric Tests': {
                         intro: 'Use when your data <strong>does not follow a normal distribution</strong>. These are less sensitive but more flexible, as they make no assumptions about the distribution.',
                         list: [
-                            { name: 'Mann-Whitney Test', description: 'Non-parametric equivalent of the independent t-test. Compara as distribuições de dois grupos.' },
-                            { name: 'Kruskal-Wallis Test', description: 'Non-parametric equivalent of one-way ANOVA. Compara as distribuições de três ou mais grupos.' },
+                            { 
+                                name: 'Mann-Whitney Test', 
+                                description: 'Non-parametric equivalent of the independent t-test. Compares the distributions of two groups.',
+                                example: '<strong>Example:</strong> You want to compare the scores on a satisfaction scale between men and women, but the score distribution is not normal.'
+                            },
+                            { 
+                                name: 'Kruskal-Wallis Test', 
+                                description: 'Non-parametric equivalent of one-way ANOVA. Compares the distributions of three or more groups.',
+                                example: '<strong>Example:</strong> You want to compare the performance rankings of athletes from three different countries, where the data distribution is not normal.'
+                            },
                         ],
                     },
                 },
@@ -207,28 +243,19 @@
 
         function App() {
             const [activeSection, setActiveSection] = useState(null);
-            const [activeFinalTest, setActiveFinalTest] = useState(null);
+            const [activeTestType, setActiveTestType] = useState(null);
+            const [activeDetailedTest, setActiveDetailedTest] = useState(null);
             const [language, setLanguage] = useState('pt');
             const text = translations[language];
 
             const resetAll = () => {
                 setActiveSection(null);
-                setActiveFinalTest(null);
+                setActiveTestType(null);
+                setActiveDetailedTest(null);
             };
 
             const handleLanguageChange = (e) => {
                 setLanguage(e.target.value);
-            };
-            
-            // Função para renderizar o texto com formatação em negrito
-            const renderBoldText = (text) => {
-                const parts = text.split('**');
-                return parts.map((part, index) => {
-                    if (index % 2 === 1) {
-                        return <strong key={index}>{part}</strong>;
-                    }
-                    return part;
-                });
             };
 
             return (
@@ -315,7 +342,7 @@
                             </>
                         )}
                         
-                        {/* Etapa 4: Escolha do Teste */}
+                        {/* Etapa 4: Escolha do Tipo de Teste */}
                         {activeSection && (
                             <>
                                 <div className="h-px bg-gray-200 my-8"></div>
@@ -326,17 +353,17 @@
                                     {text.finalChoice.map(choice => (
                                         <button
                                             key={choice.type}
-                                            onClick={() => setActiveFinalTest(activeFinalTest === choice.type ? null : choice.type)}
+                                            onClick={() => setActiveTestType(activeTestType === choice.type ? null : choice.type)}
                                             className={`p-6 rounded-2xl transition-all duration-300 transform ${
-                                                activeFinalTest === choice.type ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
+                                                activeTestType === choice.type ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
                                             }`}
                                         >
                                             <div className="flex items-center">
                                                 <span className="text-lg font-semibold text-gray-900">{choice.type}</span>
-                                                {activeFinalTest === choice.type && icons['ChevronRight']}
+                                                {activeTestType === choice.type && icons['ChevronRight']}
                                             </div>
                                             <p className="mt-2 text-sm text-left text-gray-600">
-                                                {choice.condition === 'Normal Data' ? (
+                                                {choice.condition === 'Dados Normais' ? (
                                                     <>Dados <strong>normais</strong></>
                                                 ) : (
                                                     <>Dados <strong>não normais</strong></>
@@ -348,20 +375,34 @@
                             </>
                         )}
                         
-                        {/* Detalhes do Teste Final */}
-                        {activeFinalTest && (
+                        {/* Etapa 5: Escolha do Teste Específico */}
+                        {activeTestType && (
                             <>
                                 <div className="h-px bg-gray-200 my-8"></div>
-                                <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">Detalhes: {activeFinalTest}</h2>
-                                <p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: text.detailedTests[activeFinalTest].intro }}></p>
-                                <ul className="space-y-4">
-                                    {text.detailedTests[activeFinalTest].list.map(item => (
-                                        <li key={item.name} className="p-4 bg-gray-100 rounded-lg shadow-sm">
-                                            <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-                                            <p className="mt-1 text-gray-600">{item.description}</p>
-                                        </li>
+                                <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step5Title}</h2>
+                                <p className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: text.detailedTests[activeTestType].intro }}></p>
+                                <div className="space-y-4">
+                                    {text.detailedTests[activeTestType].list.map(item => (
+                                        <button
+                                            key={item.name}
+                                            onClick={() => setActiveDetailedTest(activeDetailedTest === item.name ? null : item.name)}
+                                            className={`w-full p-4 text-left rounded-lg shadow-sm transition-all duration-300 transform ${
+                                                activeDetailedTest === item.name ? 'bg-indigo-200 ring-2 ring-indigo-500' : 'bg-gray-100 hover:bg-gray-200'
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
+                                                {activeDetailedTest !== item.name && icons['ChevronRight']}
+                                            </div>
+                                            {activeDetailedTest === item.name && (
+                                                <div className="mt-2 text-gray-700">
+                                                    <p>{item.description}</p>
+                                                    <p className="mt-2" dangerouslySetInnerHTML={{ __html: item.example }}></p>
+                                                </div>
+                                            )}
+                                        </button>
                                     ))}
-                                </ul>
+                                </div>
                             </>
                         )}
                     </div>
@@ -375,4 +416,3 @@
     </script>
 </body>
 </html>
-
