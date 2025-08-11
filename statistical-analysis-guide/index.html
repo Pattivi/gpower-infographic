@@ -77,7 +77,7 @@
             ),
         };
 
-        // Objeto de traduções para português e inglês
+        // Objeto de traduções para português
         const translations = {
             'pt': {
                 title: 'Como escolher o tipo de análise estatística',
@@ -217,145 +217,10 @@
                     },
                 },
             },
-            'en': {
-                title: 'How to choose the type of statistical analysis',
-                restart: 'Restart',
-                intro: 'Understand the fundamental concepts of statistics to choose the most suitable test for your research.',
-                step0: {
-                    title: 'Pillars of Statistical Analysis',
-                    description: 'All statistical analysis is built on three pillars: inference, hypothesis formulation, and data distribution.',
-                    pillars: [
-                        {
-                            name: 'Inferential Statistics',
-                            description: 'The foundation of research. It is the process of drawing conclusions about a large <strong>population</strong> from a small, representative <strong>sample</strong>. It allows for generalizing results and making predictions.',
-                            icon: icons.analytics,
-                        },
-                        {
-                            name: 'Hypotheses',
-                            description: 'What you want to test. The <strong>Null Hypothesis (H₀)</strong> states that there is no difference or effect. The <strong>Alternative Hypothesis (H₁)</strong> states that there is a difference or an effect.',
-                            icon: icons.hypothesis,
-                        },
-                        {
-                            name: 'Data Distribution',
-                            description: 'The way your data behaves. The <strong>normal distribution</strong> is one of the most important, as most of the most powerful statistical tests (parametric) depend on it.',
-                            icon: icons.distribution,
-                        },
-                    ],
-                },
-                step1: {
-                    title: '1. Types of Error',
-                    description: 'In biostatistics, decisions are based on probabilities, which means there is a chance of making errors when rejecting or not rejecting a hypothesis. Understand the two types of error.',
-                    errors: [
-                        {
-                            type: 'Type I Error (α)',
-                            description: 'It is the probability of <strong>rejecting the null hypothesis</strong> (H₀) when it is, in fact, true. In other words, it is the chance of concluding that there is an effect when one does not exist. The α value is usually set at 0.05.',
-                            icon: icons.error,
-                        },
-                        {
-                            type: 'Type II Error (β)',
-                            description: 'It is the probability of <strong>not rejecting the null hypothesis</strong> (H₀) when it is, in fact, false. In other words, it is the chance of failing to find an effect that really exists. Statistical power (1-β) aims to minimize this error.',
-                            icon: icons.warning,
-                        },
-                    ],
-                },
-                step2: {
-                    title: '2. Visual and Graphical Verification (Normality)',
-                    description: 'Start with a visual analysis, which can be the first indicator of your data\'s normality.',
-                    visualTests: [
-                        {
-                            name: 'Histogram',
-                            description: 'Check if the data distribution resembles a bell-shaped curve, without sharp skewness or multiple peaks.',
-                            icon: icons.barChart,
-                        },
-                        {
-                            name: 'QQ-Plot',
-                            description: 'Assess whether the data points follow a straight diagonal line. Significant deviations can indicate that the distribution is not normal.',
-                            icon: icons.lineChart,
-                        },
-                    ],
-                },
-                step3: {
-                    title: '3. Formal Normality Tests',
-                    description: 'Use formal statistical tests for a more rigorous confirmation. The null hypothesis (H₀) is that the data is normal. Which one do you choose?',
-                    formalTests: [
-                        {
-                            name: 'Shapiro-Wilk',
-                            description: 'Most suitable for small samples (n < 50).',
-                        },
-                        {
-                            name: 'Kolmogorov-Smirnov',
-                            description: 'Ideal para amostras grandes (n > 50).',
-                        },
-                    ],
-                },
-                step4: {
-                    title: (test) => `4. Interpreting the ${test} Test`,
-                    description: 'Analyze the p-value of the test to make a decision.',
-                    interpretationOptions: [
-                        {
-                            title: 'If p-value > 0.05',
-                            description: 'We do not reject the null hypothesis. This means that there is evidence that the data follows a normal distribution.',
-                            icon: icons.check,
-                        },
-                        {
-                            title: 'If p-value ≤ 0.05',
-                            description: 'We reject the null hypothesis. This means that there is evidence that the data does not follow a normal distribution.',
-                            icon: icons.xCircle,
-                        },
-                    ],
-                },
-                step5: {
-                    title: '5. Choosing the Statistical Test Type',
-                    description: 'Based on your normality analysis, choose the most appropriate test type for your data.',
-                    finalChoice: [
-                        {
-                            type: 'Parametric Tests',
-                            condition: 'Normal Data',
-                        },
-                        {
-                            type: 'Non-Parametric Tests',
-                            condition: 'Non-Normal Data',
-                        },
-                    ],
-                },
-                step6: {
-                    title: '6. Choosing the Specific Test',
-                    description: 'Now, select the test that best fits your research to see details and examples.',
-                    detailedTests: {
-                        'Parametric Tests': {
-                            intro: 'Use when your data <strong>follows a normal distribution</strong>. These tests use the <strong>mean</strong> and <strong>standard deviation</strong> as measures of central tendency and dispersion. They are more robust and powerful tests.',
-                            list: [
-                                { 
-                                    name: 't-Test', 
-                                    description: 'Compares the means of two groups (independent, paired or a single sample).',
-                                    example: '<strong>Example:</strong> You want to compare the average weight of two groups of mice. Use the independent t-Test if the groups are unrelated.'
-                                },
-                                { 
-                                    name: 'ANOVA (Analysis of Variance)', 
-                                    description: 'Compares the means of three or more groups. Can be one-way, two-way, or repeated measures.',
-                                    example: '<strong>Example:</strong> You want to compare the glucose level among three groups: a control group, a high-fat diet group, and a balanced diet group.'
-                                },
-                            ],
-                        },
-                        'Non-Parametric Tests': {
-                            intro: 'Use when your data <strong>does not follow a normal distribution</strong>. These tests use the <strong>median</strong> and the <strong>interquartile range</strong>. They are less sensitive but more flexible, as they make no assumptions about the distribution.',
-                            list: [
-                                { 
-                                    name: 'Mann-Whitney Test', 
-                                    description: 'Non-parametric equivalent of the independent t-test. Compara as distribuições de dois grupos.',
-                                    example: '<strong>Exemplo:</strong> You want to compare the scores on a satisfaction scale between men and women, but the score distribution is not normal.'
-                                },
-                                { 
-                                    name: 'Kruskal-Wallis Test', 
-                                    description: 'Non-parametric equivalent of one-way ANOVA. Compara as distribuições de tr\u00eas ou mais grupos.',
-                                    example: '<strong>Exemplo:</strong> You want to compare the performance rankings of athletes from three different countries, where the data distribution is not normal.'
-                                },
-                            ],
-                        },
-                    },
-                },
-            },
         };
+
+        // O texto agora é fixo em português
+        const text = translations.pt;
 
         // Componente principal do aplicativo React
         function App() {
@@ -364,8 +229,6 @@
             const [activeSection, setActiveSection] = useState(null);
             const [activeTestType, setActiveTestType] = useState(null);
             const [activeDetailedTest, setActiveDetailedTest] = useState(null);
-            const [language, setLanguage] = useState('pt');
-            const text = translations[language];
 
             // Função para resetar todos os estados
             const resetAll = () => {
@@ -373,11 +236,6 @@
                 setActiveSection(null);
                 setActiveTestType(null);
                 setActiveDetailedTest(null);
-            };
-
-            // Manipulador para a mudança de idioma
-            const handleLanguageChange = (e) => {
-                setLanguage(e.target.value);
             };
 
             // Renderiza um item do pilar com a descrição completa ou apenas o nome
@@ -439,13 +297,7 @@
                             {activeTestType !== choice.type && <div className="ml-auto">{icons['ChevronRight']}</div>}
                         </div>
                         {activeTestType === choice.type && (
-                            <p className="mt-4 text-sm text-left text-gray-600">
-                                {choice.condition === 'Dados Normais' ? (
-                                    <>Dados <strong>normais</strong></>
-                                ) : (
-                                    <>Dados <strong>não normais</strong></>
-                                )}
-                            </p>
+                            <p className="mt-4 text-sm text-left text-gray-600" dangerouslySetInnerHTML={{ __html: choice.condition === 'Dados Normais' ? 'Dados <strong>normais</strong>' : 'Dados <strong>não normais</strong>' }}></p>
                         )}
                     </button>
                 );
@@ -461,10 +313,6 @@
                                 <h1 className="text-2xl md:text-4xl font-bold text-gray-900">{text.title}</h1>
                             </div>
                             <div className="flex items-center space-x-4 mt-4 sm:mt-0">
-                                <select onChange={handleLanguageChange} value={language} className="bg-white border border-gray-300 rounded-lg p-2 text-sm font-semibold text-gray-700">
-                                    <option value="pt">Português</option>
-                                    <option value="en">English</option>
-                                </select>
                                 <button
                                     onClick={resetAll}
                                     className="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
