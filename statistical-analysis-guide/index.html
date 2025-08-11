@@ -94,7 +94,7 @@
                         },
                         {
                             name: 'Hipóteses',
-                            description: <>O que você quer testar. A <strong>Hipótese Nula (H₀)</strong> afirma que não há diferença ou efeito. A <strong>Hipótese Alternativa (H₁)</strong> afirma que há uma diferença ou um efeito.</>,
+                            description: 'O que você quer testar. A <strong>Hipótese Nula (H₀)</strong> afirma que não há diferença ou efeito. A <strong>Hipótese Alternativa (H₁)</strong> afirma que há uma diferença ou um efeito.',
                             icon: icons.hypothesis,
                         },
                         {
@@ -232,7 +232,7 @@
                         },
                         {
                             name: 'Hypotheses',
-                            description: <>What you want to test. The <strong>Null Hypothesis (H₀)</strong> states that there is no difference or effect. The <strong>Alternative Hypothesis (H₁)</strong> states that there is a difference or an effect.</>,
+                            description: 'What you want to test. The <strong>Null Hypothesis (H₀)</strong> states that there is no difference or effect. The <strong>Alternative Hypothesis (H₁)</strong> states that there is a difference or an effect.',
                             icon: icons.hypothesis,
                         },
                         {
@@ -380,6 +380,79 @@
                 setLanguage(e.target.value);
             };
 
+            // Renderiza um item do pilar com a descrição completa ou apenas o nome
+            const renderPillarItem = (pillar) => {
+                return (
+                    <button
+                        key={pillar.name}
+                        onClick={() => setActivePillar(activePillar === pillar.name ? null : pillar.name)}
+                        className={`p-6 rounded-2xl transition-all duration-300 transform flex flex-col items-start w-full text-left ${
+                            activePillar === pillar.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
+                        }`}
+                    >
+                        <div className="flex items-center w-full">
+                            {pillar.icon}
+                            <span className="ml-3 text-lg font-semibold text-gray-900">{pillar.name}</span>
+                            {activePillar !== pillar.name && <div className="ml-auto">{icons['ChevronRight']}</div>}
+                        </div>
+                        {activePillar === pillar.name && (
+                            <div className="mt-4 text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: pillar.description }}></div>
+                        )}
+                    </button>
+                );
+            };
+
+            // Renderiza a seção de teste formal
+            const renderFormalTestItem = (test) => {
+                return (
+                    <button
+                        key={test.name}
+                        onClick={() => setActiveSection(activeSection === test.name ? null : test.name)}
+                        className={`p-6 rounded-2xl transition-all duration-300 transform flex flex-col items-start w-full text-left ${
+                            activeSection === test.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
+                        }`}
+                    >
+                        <div className="flex items-center w-full">
+                            {icons['flask']}
+                            <span className="ml-3 text-lg font-semibold text-gray-900">{test.name}</span>
+                            {activeSection !== test.name && <div className="ml-auto">{icons['ChevronRight']}</div>}
+                        </div>
+                        {activeSection === test.name && (
+                            <p className="mt-4 text-sm text-left text-gray-600">
+                                {test.description}
+                            </p>
+                        )}
+                    </button>
+                );
+            };
+
+            // Renderiza a seção de escolha final
+            const renderFinalChoiceItem = (choice) => {
+                return (
+                    <button
+                        key={choice.type}
+                        onClick={() => setActiveTestType(activeTestType === choice.type ? null : choice.type)}
+                        className={`p-6 rounded-2xl transition-all duration-300 transform flex flex-col items-start w-full text-left ${
+                            activeTestType === choice.type ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
+                        }`}
+                    >
+                        <div className="flex items-center w-full">
+                            <span className="text-lg font-semibold text-gray-900">{choice.type}</span>
+                            {activeTestType !== choice.type && <div className="ml-auto">{icons['ChevronRight']}</div>}
+                        </div>
+                        {activeTestType === choice.type && (
+                            <p className="mt-4 text-sm text-left text-gray-600">
+                                {choice.condition === 'Dados Normais' ? (
+                                    <>Dados <strong>normais</strong></>
+                                ) : (
+                                    <>Dados <strong>não normais</strong></>
+                                )}
+                            </p>
+                        )}
+                    </button>
+                );
+            };
+
             return (
                 <div className="bg-gray-50 min-h-screen p-4 sm:p-8 md:p-12 font-sans antialiased text-gray-800">
                     <div className="container mx-auto max-w-4xl bg-white rounded-3xl shadow-xl p-6 md:p-12">
@@ -411,25 +484,7 @@
                         <p className="text-gray-600 mb-6">{text.step0.description}</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                            {text.step0.pillars.map(pillar => (
-                                <button
-                                    key={pillar.name}
-                                    onClick={() => setActivePillar(activePillar === pillar.name ? null : pillar.name)}
-                                    className={`p-6 rounded-2xl transition-all duration-300 transform flex items-center justify-between w-full text-left ${
-                                        activePillar === pillar.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
-                                    }`}
-                                >
-                                    <div className="flex items-center">
-                                        {pillar.icon}
-                                        <span className="ml-3 text-lg font-semibold text-gray-900">{pillar.name}</span>
-                                    </div>
-                                    {activePillar === pillar.name ? (
-                                        <div className="ml-4 text-sm text-left text-gray-700 mt-2">
-                                            {pillar.description}
-                                        </div>
-                                    ) : icons['ChevronRight']}
-                                </button>
-                            ))}
+                            {text.step0.pillars.map(renderPillarItem)}
                         </div>
 
                         {/* Nova Etapa 1: Tipos de Erro */}
@@ -444,7 +499,7 @@
                                         {error.icon}
                                         <span className="ml-3 text-lg font-semibold text-gray-900">{error.type}</span>
                                     </div>
-                                    <p className="mt-2 text-sm text-left text-gray-600">{error.description}</p>
+                                    <p className="mt-2 text-sm text-left text-gray-600" dangerouslySetInnerHTML={{ __html: error.description }}></p>
                                 </div>
                             ))}
                         </div>
@@ -472,25 +527,7 @@
                         <p className="text-gray-600 mb-6">{text.step3.description}</p>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                            {text.step3.formalTests.map(test => (
-                                <button
-                                    key={test.name}
-                                    onClick={() => setActiveSection(activeSection === test.name ? null : test.name)}
-                                    className={`p-6 rounded-2xl transition-all duration-300 transform flex items-center justify-between w-full text-left ${
-                                        activeSection === test.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
-                                    }`}
-                                >
-                                    <div className="flex items-center">
-                                        {icons['flask']}
-                                        <span className="ml-3 text-lg font-semibold text-gray-900">{test.name}</span>
-                                    </div>
-                                    {activeSection === test.name ? (
-                                        <p className="mt-2 text-sm text-left text-gray-600">
-                                            {test.description}
-                                        </p>
-                                    ) : icons['ChevronRight']}
-                                </button>
-                            ))}
+                            {text.step3.formalTests.map(renderFormalTestItem)}
                         </div>
 
                         {/* Etapa 4: Interpretação */}
@@ -522,28 +559,7 @@
                                 <p className="text-gray-600 mb-6">{text.step5.description}</p>
                                 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                    {text.step5.finalChoice.map(choice => (
-                                        <button
-                                            key={choice.type}
-                                            onClick={() => setActiveTestType(activeTestType === choice.type ? null : choice.type)}
-                                            className={`p-6 rounded-2xl transition-all duration-300 transform flex items-center justify-between w-full text-left ${
-                                                activeTestType === choice.type ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
-                                            }`}
-                                        >
-                                            <div className="flex items-center">
-                                                <span className="text-lg font-semibold text-gray-900">{choice.type}</span>
-                                            </div>
-                                            {activeTestType === choice.type ? (
-                                                <p className="mt-2 text-sm text-left text-gray-600">
-                                                    {choice.condition === 'Dados Normais' ? (
-                                                        <>Dados <strong>normais</strong></>
-                                                    ) : (
-                                                        <>Dados <strong>não normais</strong></>
-                                                    )}
-                                                </p>
-                                            ) : icons['ChevronRight']}
-                                        </button>
-                                    ))}
+                                    {text.step5.finalChoice.map(renderFinalChoiceItem)}
                                 </div>
                             </>
                         )}
