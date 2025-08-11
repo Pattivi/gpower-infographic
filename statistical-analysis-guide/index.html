@@ -21,6 +21,21 @@
         const { useState } = React;
 
         const icons = {
+            'analytics': (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
+                    <path d="M3 3v18h18"></path><path d="M18 10l-6 6-4-4-5 5"></path>
+                </svg>
+            ),
+            'hypothesis': (
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
+                    <path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            ),
+            'distribution': (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
+                    <path d="M16 18l-4-4-4 4"></path><path d="M12 14v6"></path><path d="M3 3v18h18"></path>
+                </svg>
+            ),
             'barChart': (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-indigo-500">
                     <line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line>
@@ -48,11 +63,15 @@
             'xCircle': (
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-red-500"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
             ),
-            'listChecks': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-green-500"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            'error': (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-red-500">
+                  <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
             ),
-            'listX': (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-red-500"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            'warning': (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-amber-500">
+                  <path d="M10.29 3.86L1.83 18a2 2 0 0 0 1.76 3h16.84a2 2 0 0 0 1.76-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
             ),
         };
 
@@ -60,8 +79,27 @@
             'pt': {
                 title: 'Como escolher o tipo de análise estatística',
                 restart: 'Reiniciar',
-                intro: 'Entenda como verificar a normalidade dos seus dados e escolher o teste estatístico mais adequado (paramétrico ou não paramétrico).',
-                step1Title: '1. Verificação Visual e Gráfica',
+                intro: 'Entenda os conceitos fundamentais da estatística para escolher o teste mais adequado para a sua pesquisa.',
+                step0Title: 'Os Pilares da Análise Estatística',
+                step0Description: 'Toda análise estatística é construída sobre três pilares: a inferência, a formulação de hipóteses e a distribuição dos dados.',
+                pillars: [
+                    {
+                        name: 'Estatística Inferencial',
+                        description: 'A base da pesquisa. É o processo de tirar conclusões sobre uma grande <strong>população</strong> a partir de uma pequena <strong>amostra</strong> representativa. Permite generalizar resultados e fazer previsões.',
+                        icon: icons.analytics,
+                    },
+                    {
+                        name: 'Hipóteses',
+                        description: <>O que você quer testar. A <strong>Hipótese Nula (H₀)</strong> afirma que não há diferença ou efeito. A <strong>Hipótese Alternativa (H₁)</strong> afirma que há uma diferença ou um efeito.</>,
+                        icon: icons.hypothesis,
+                    },
+                    {
+                        name: 'Distribuição dos Dados',
+                        description: 'A forma como seus dados se comportam. A <strong>distribuição normal</strong> é uma das mais importantes, pois a maioria dos testes estatísticos mais poderosos (paramétricos) dependem dela.',
+                        icon: icons.distribution,
+                    },
+                ],
+                step1Title: '1. Verificação Visual e Gráfica (Normalidade)',
                 step1Description: 'Comece com a análise visual, que pode ser o primeiro indicador da normalidade dos seus dados.',
                 visualTests: [
                     {
@@ -76,7 +114,7 @@
                     },
                 ],
                 step2Title: '2. Testes de Normalidade Formal',
-                step2Description: 'Use testes estatísticos formais para uma confirmação mais rigorosa. A hipótese nula ($H_0$) é que os dados são normais. O que você escolhe?',
+                step2Description: 'Use testes estatísticos formais para uma confirmação mais rigorosa. A hipótese nula (H₀) é que os dados são normais. O que você escolhe?',
                 formalTests: [
                     {
                         name: 'Shapiro-Wilk',
@@ -117,7 +155,7 @@
                 step5Description: 'Agora, selecione o teste que melhor se aplica à sua pesquisa para ver detalhes e exemplos.',
                 detailedTests: {
                     'Testes Paramétricos': {
-                        intro: 'Use quando seus dados <strong>seguem uma distribuição normal</strong> e a variância dos grupos é homogênea. São testes mais robustos e poderosos.',
+                        intro: 'Use quando seus dados <strong>seguem uma distribuição normal</strong>. Esses testes usam a <strong>média</strong> e o <strong>desvio padrão</strong> como medidas centrais e de dispersão. São testes mais robustos e poderosos.',
                         list: [
                             { 
                                 name: 'Teste t', 
@@ -131,8 +169,8 @@
                             },
                         ],
                     },
-                    'Testes Não Paramétricos': {
-                        intro: 'Use quando seus dados <strong>não seguem uma distribuição normal</strong>. São menos sensíveis, mas mais flexíveis, pois não fazem suposições sobre a distribuição.',
+                    'Non-Parametric Tests': {
+                        intro: 'Use quando seus dados <strong>não seguem uma distribuição normal</strong>. Esses testes usam a <strong>mediana</strong> e o <strong>intervalo interquartil</strong>. São menos sensíveis, mas mais flexíveis, pois não fazem suposições sobre a distribuição.',
                         list: [
                             { 
                                 name: 'Teste de Mann-Whitney', 
@@ -142,7 +180,7 @@
                             { 
                                 name: 'Teste de Kruskal-Wallis', 
                                 description: 'Equivalente não paramétrico da ANOVA de uma via. Compara as distribuições de três ou mais grupos.',
-                                example: '<strong>Exemplo:</strong> Você quer comparar os rankings de desempenho de atletas de três países diferentes, onde a distribuição dos dados não é normal.'
+                                example: '<strong>Exemplo:</strong> You want to compare the performance rankings of athletes from three different countries, where the data distribution is not normal.'
                             },
                         ],
                     },
@@ -151,8 +189,27 @@
             'en': {
                 title: 'How to choose the type of statistical analysis',
                 restart: 'Restart',
-                intro: 'Understand how to check the normality of your data and choose the most appropriate statistical test (parametric or non-parametric).',
-                step1Title: '1. Visual and Graphical Verification',
+                intro: 'Understand the fundamental concepts of statistics to choose the most suitable test for your research.',
+                step0Title: 'Pillars of Statistical Analysis',
+                step0Description: 'All statistical analysis is built on three pillars: inference, hypothesis formulation, and data distribution.',
+                pillars: [
+                    {
+                        name: 'Inferential Statistics',
+                        description: 'The foundation of research. It is the process of drawing conclusions about a large <strong>population</strong> from a small, representative <strong>sample</strong>. It allows for generalizing results and making predictions.',
+                        icon: icons.analytics,
+                    },
+                    {
+                        name: 'Hypotheses',
+                        description: <>What you want to test. The <strong>Null Hypothesis (H₀)</strong> states that there is no difference or effect. The <strong>Alternative Hypothesis (H₁)</strong> states that there is a difference or an effect.</>,
+                        icon: icons.hypothesis,
+                    },
+                    {
+                        name: 'Data Distribution',
+                        description: 'The way your data behaves. The <strong>normal distribution</strong> is one of the most important, as most of the most powerful statistical tests (parametric) depend on it.',
+                        icon: icons.distribution,
+                    },
+                ],
+                step1Title: '1. Verificação Visual e Gráfica (Normalidade)',
                 step1Description: 'Start with a visual analysis, which can be the first indicator of your data\'s normality.',
                 visualTests: [
                     {
@@ -167,7 +224,7 @@
                     },
                 ],
                 step2Title: '2. Formal Normality Tests',
-                step2Description: 'Use formal statistical tests for a more rigorous confirmation. The null hypothesis ($H_0$) is that the data is normal. Which one do you choose?',
+                step2Description: 'Use formal statistical tests for a more rigorous confirmation. The null hypothesis (H₀) is that the data is normal. Which one do you choose?',
                 formalTests: [
                     {
                         name: 'Shapiro-Wilk',
@@ -208,32 +265,32 @@
                 step5Description: 'Now, select the test that best fits your research to see details and examples.',
                 detailedTests: {
                     'Parametric Tests': {
-                        intro: 'Use when your data <strong>follows a normal distribution</strong> and the variance of the groups is homogeneous. These are more robust and powerful tests.',
+                        intro: 'Use when your data <strong>follows a normal distribution</strong>. These tests use the <strong>mean</strong> and <strong>standard deviation</strong> as measures of central tendency and dispersion. They are more robust and powerful tests.',
                         list: [
                             { 
                                 name: 't-Test', 
-                                description: 'Compares the means of two groups (independent, paired, or a single sample).',
-                                example: '<strong>Example:</strong> You want to compare the average weight of two groups of mice. Use the independent t-Test if the groups are unrelated.'
+                                description: 'Compares the means of two groups (independent, pareadas or a single sample).',
+                                example: '<strong>Exemplo:</strong> You want to compare the average weight of two groups of mice. Use the independent t-Test if the groups are unrelated.'
                             },
                             { 
-                                name: 'ANOVA (Analysis of Variance)', 
-                                description: 'Compares the means of three or more groups. Can be one-way, two-way, or repeated measures.',
-                                example: '<strong>Example:</strong> You want to compare the glucose level among three groups: a control group, a high-fat diet group, and a balanced diet group.'
+                                name: 'ANOVA (Análise de Variância)', 
+                                description: 'Compares the means of three or more groups. Pode ser de uma via, duas vias, ou de medidas repetidas.',
+                                example: '<strong>Exemplo:</strong> You want to compare the glucose level among three groups: a control group, a high-fat diet group, and a balanced diet group.'
                             },
                         ],
                     },
                     'Non-Parametric Tests': {
-                        intro: 'Use when your data <strong>does not follow a normal distribution</strong>. These are less sensitive but more flexible, as they make no assumptions about the distribution.',
+                        intro: 'Use when your data <strong>não segue uma distribuição normal</strong>. Esses testes usam a <strong>mediana</strong> e o <strong>intervalo interquartil</strong>. They are less sensitive but more flexible, as they make no assumptions about the distribution.',
                         list: [
                             { 
-                                name: 'Mann-Whitney Test', 
-                                description: 'Non-parametric equivalent of the independent t-test. Compares the distributions of two groups.',
-                                example: '<strong>Example:</strong> You want to compare the scores on a satisfaction scale between men and women, but the score distribution is not normal.'
+                                name: 'Teste de Mann-Whitney', 
+                                description: 'Non-parametric equivalent of the independent t-test. Compara as distribuições de dois grupos.',
+                                example: '<strong>Exemplo:</strong> You want to compare the scores on a satisfaction scale between men and women, but the score distribution is not normal.'
                             },
                             { 
-                                name: 'Kruskal-Wallis Test', 
-                                description: 'Non-parametric equivalent of one-way ANOVA. Compares the distributions of three or more groups.',
-                                example: '<strong>Example:</strong> You want to compare the performance rankings of athletes from three different countries, where the data distribution is not normal.'
+                                name: 'Teste de Kruskal-Wallis', 
+                                description: 'Non-parametric equivalent of one-way ANOVA. Compara as distribuições de três ou mais grupos.',
+                                example: '<strong>Exemplo:</strong> You want to compare the performance rankings of athletes from three different countries, where the data distribution is not normal.'
                             },
                         ],
                     },
@@ -242,6 +299,7 @@
         };
 
         function App() {
+            const [activePillar, setActivePillar] = useState(null);
             const [activeSection, setActiveSection] = useState(null);
             const [activeTestType, setActiveTestType] = useState(null);
             const [activeDetailedTest, setActiveDetailedTest] = useState(null);
@@ -249,6 +307,7 @@
             const text = translations[language];
 
             const resetAll = () => {
+                setActivePillar(null);
                 setActiveSection(null);
                 setActiveTestType(null);
                 setActiveDetailedTest(null);
@@ -280,8 +339,37 @@
                                 </button>
                             </div>
                         </div>
+                        
+                        <p className="text-gray-600 mb-6">{text.intro}</p>
+
+                        {/* Etapa 0: Pilares da Análise Estatística */}
+                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step0Title}</h2>
+                        <p className="text-gray-600 mb-6">{text.step0Description}</p>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            {text.pillars.map(pillar => (
+                                <button
+                                    key={pillar.name}
+                                    onClick={() => setActivePillar(activePillar === pillar.name ? null : pillar.name)}
+                                    className={`p-6 rounded-2xl transition-all duration-300 transform ${
+                                        activePillar === pillar.name ? 'bg-indigo-100 ring-2 ring-indigo-500 shadow-md scale-105' : 'bg-gray-100 hover:bg-gray-200 hover:shadow-md'
+                                    }`}
+                                >
+                                    <div className="flex items-center">
+                                        {pillar.icon}
+                                        <span className="ml-3 text-lg font-semibold text-gray-900">{pillar.name}</span>
+                                        {activePillar === pillar.name && icons['ChevronRight']}
+                                    </div>
+                                    {activePillar === pillar.name && (
+                                        <p className="mt-2 text-sm text-left text-gray-700">{pillar.description}</p>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                        {/* A partir daqui, as etapas de 1 a 5 continuam a partir do original */}
 
                         {/* Etapa 1: Verificação Visual */}
+                        <div className="h-px bg-gray-200 my-8"></div>
                         <h2 className="text-xl md:text-2xl font-bold mb-4 text-indigo-700">{text.step1Title}</h2>
                         <p className="text-gray-600 mb-6">{text.step1Description}</p>
                         
